@@ -6,5 +6,7 @@ async def create_form_data(data: FormData) -> dict:
 
     new_data = await form_collection.insert_one(data.dict())
     created_data = await form_collection.find_one({"_id": new_data.inserted_id})
-    created_data["_id"] = str(created_data["_id"])
+    
+    if created_data:
+        created_data["_id"] = str(created_data["_id"])
     return created_data
