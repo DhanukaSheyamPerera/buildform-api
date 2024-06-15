@@ -10,3 +10,9 @@ async def create_form_data(data: FormData) -> dict:
     if created_data:
         created_data["_id"] = str(created_data["_id"])
     return created_data
+
+async def get_form_data(id: str) -> dict:
+    data = await form_collection.find_one({"_id": ObjectId(id)})
+    if data:
+        data['_id'] = str(data['_id'])
+    return data
