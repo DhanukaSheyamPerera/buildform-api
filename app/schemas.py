@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, HttpUrl, Field
+from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
 
 class FormData(BaseModel):
@@ -11,4 +11,4 @@ class FormData(BaseModel):
     coding_experience: str = Field(..., min_length=1, max_length=50)
     annual_compensation: Optional[float] = None
     certifying_statement: bool
-    linkedin_url: Optional[HttpUrl] = None
+    linkedin_url: Optional[str] = None
