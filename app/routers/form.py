@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas import FormData
-from app.crud import create_form_data, get_form_data
+from app.crud import create_form_data, get_form_data, get_all_form_data
 
 
 router = APIRouter()
@@ -23,5 +23,13 @@ async def get_form(id: str):
         if not data:
             raise HTTPException(status_code=404, detail="Form does not exit.")
         return data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/forms/", response_model=list[FormData])
+async def get_all_forms(limit: int = None):
+    try:
+        forms = await get_all_form_data(limit)
+        return forms
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
