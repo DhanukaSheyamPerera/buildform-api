@@ -26,3 +26,7 @@ async def get_all_form_data(limit: Optional[int] = None) -> list[FormDataRespons
     for item in data:
         item['_id'] = str(item['_id'])
     return data
+
+async def delete_form_data(id: str) -> bool:
+    delete_result = await form_collection.delete_one({"_id": ObjectId(id)})
+    return delete_result.deleted_count > 0
