@@ -6,8 +6,7 @@ from motor.motor_asyncio import AsyncIOMotorCursor
 from typing import Optional
 
 async def create_form_data(data: FormData) -> FormDataResponse:
-
-    new_data = await form_collection.insert_one(data.dict())
+    new_data = await form_collection.insert_one(data.model_dump())
     created_data = await form_collection.find_one({"_id": new_data.inserted_id})
     
     if created_data:
