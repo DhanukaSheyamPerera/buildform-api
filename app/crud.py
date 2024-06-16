@@ -30,6 +30,17 @@ async def delete_form_data(id: str) -> bool:
     delete_result = await form_collection.delete_one({"_id": ObjectId(id)})
     return delete_result.deleted_count > 0
 
+async def update_form_data(id: str, data: FormData) -> FormDataResponse:
+    update_result = await form_collection.update_one(
+        {"_id": ObjectId(id)},
+        {"$set": data.model_dump()}
+    )
+    updated_data = await form_collection.find_one({"_id": ObjectId(id)})
+    if updated_data:
+        updated_data['_id'] = str(updated_data['_id'])
+    return updated_data
+
+
 async def count_records() -> int:
     count = await form_collection.count_documents({})
     return count

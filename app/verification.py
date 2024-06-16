@@ -9,7 +9,7 @@ security = HTTPBasic()
 load_dotenv()
 
 def verify_password(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_password = os.getenv("DELETE_METHOD_PASSWORD")
+    correct_password = os.getenv("AUTHENTICATION_PASSWORD")
     if credentials.password != correct_password:
         raise InvalidCredentialsException()
     return credentials.username

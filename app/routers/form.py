@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from app.schemas import FormData, FormDataResponse
-from app.crud import create_form_data, get_form_data, get_all_form_data, delete_form_data, count_records
+from app.crud import create_form_data, get_form_data, get_all_form_data, delete_form_data, count_records, update_form_data
 from app.exceptions import FormDataNotFoundException, FormCreationFailedException, FormRecordsNullExceptionn
 from app.verification import verify_password
 
 
 router = APIRouter()
 
-@router.post("/submit-form", response_model=FormDataResponse)
+@router.post("/forms", response_model=FormDataResponse)
 async def submit_form(form_data: FormData):
     try:
         created_data = await create_form_data(form_data)
@@ -44,6 +44,16 @@ async def delete_form(id: str, username: str = Depends(verify_password)):
         if not deleted:
             raise FormDataNotFoundException()
         return {"message": "Form deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/update-forms/{id}", response_model=FormData)
+async def update_record(id: str, data: FormData, username: str = Depends(verify_password)):
+    try:
+        updated = await update_form_data(id, data)
+        if not updated:
+            raise FormDataNotFoundException()
+        return updated
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
