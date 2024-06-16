@@ -63,6 +63,10 @@ To run this project, you will need to add the following environment variables to
 - `MONGODB_PASSWORD`: Your MongoDB password.
 - `MONGODB_CLUSTER_URL`: Your MongoDB cluster URL.
 - `AUTHENTICATION_PASSWORD`: The password for HTTP Basic authentication.
+<details>
+  <summary>Authentication Password</summary>
+  1/U%1s:Ieh2EulfMIq3$?B2
+</details>
 
 ## Dependencies
 This project uses several external libraries which can be found in the `requirements.txt` file. Some of the key dependencies include:
