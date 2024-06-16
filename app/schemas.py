@@ -1,6 +1,7 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import List, Optional
 # from bson import ObjectId
+import re
 
 class FormData(BaseModel):
     first_name: str = Field(..., min_length=1, max_length=50)
@@ -13,6 +14,14 @@ class FormData(BaseModel):
     annual_compensation: Optional[float] = None
     certifying_statement: bool
     linkedin_url: Optional[str] = None
+
+    @field_validator("linkedin_url")
+    def validate_linkedin_url(cls, v):
+        if v is not None:
+            pattern = r'^https?:\/\/(www\.)?linkedin\.com\/.*$'
+            if not re.match(pattern, v):
+                raise ValueError("Invalid LinkedIn URL")
+        return v
 
 class FormDataResponse(FormData):
     id: str = Field(..., alias='_id')
