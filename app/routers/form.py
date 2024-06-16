@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from app.schemas import FormData, FormDataResponse
 from app.crud import create_form_data, get_form_data, get_all_form_data, delete_form_data, count_records
 from app.exceptions import FormDataNotFoundException, FormCreationFailedException, FormRecordsNullExceptionn
+from app.verification import verify_password
 
 
 router = APIRouter()
@@ -37,7 +38,7 @@ async def get_all_forms(limit: int = None):
         raise HTTPException(status_code=500, detail=str(e))
     
 @router.delete("/forms/{id}", response_model=dict)
-async def delete_form(id: str):
+async def delete_form(id: str, username: str = Depends(verify_password)):
     try:
         deleted = await delete_form_data(id)
         if not deleted:
