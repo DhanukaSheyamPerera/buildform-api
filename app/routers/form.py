@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas import FormData, FormDataResponse
-from app.crud import create_form_data, get_form_data, get_all_form_data, delete_form_data
-from app.exceptions import FormDataNotFoundException, FormCreationFailedException
+from app.crud import create_form_data, get_form_data, get_all_form_data, delete_form_data, count_records
+from app.exceptions import FormDataNotFoundException, FormCreationFailedException, FormRecordsNullExceptionn
 
 
 router = APIRouter()
@@ -43,5 +43,15 @@ async def delete_form(id: str):
         if not deleted:
             raise FormDataNotFoundException()
         return {"message": "Form deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/forms-count", response_model=dict)
+async def get_form_count():
+    try:
+        count = await count_records()
+        if not count:
+            raise FormRecordsNullExceptionn()
+        return {"records_count": count}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

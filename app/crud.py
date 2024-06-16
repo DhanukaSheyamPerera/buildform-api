@@ -30,3 +30,7 @@ async def get_all_form_data(limit: Optional[int] = None) -> list[FormDataRespons
 async def delete_form_data(id: str) -> bool:
     delete_result = await form_collection.delete_one({"_id": ObjectId(id)})
     return delete_result.deleted_count > 0
+
+async def count_records() -> int:
+    count = await form_collection.count_documents({})
+    return count

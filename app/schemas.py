@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
-from bson import ObjectId
+# from bson import ObjectId
 
 class FormData(BaseModel):
     first_name: str = Field(..., min_length=1, max_length=50)
