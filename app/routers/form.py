@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from app.schemas import FormData, FormDataResponse
 from app.crud import create_form_data, get_form_data, get_all_form_data, delete_form_data, count_records, update_form_data
-from app.exceptions import FormDataNotFoundException, FormCreationFailedException, FormRecordsNullExceptionn
+from app.exceptions import FormDataNotFoundException, FormCreationFailedException, FormRecordsNullException
 from app.verification import verify_password
 
 
@@ -62,7 +62,7 @@ async def get_form_count():
     try:
         count = await count_records()
         if not count:
-            raise FormRecordsNullExceptionn()
+            raise FormRecordsNullException()
         return {"records_count": count}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
