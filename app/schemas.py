@@ -13,3 +13,9 @@ class FormData(BaseModel):
     annual_compensation: Optional[float] = None
     certifying_statement: bool
     linkedin_url: Optional[str] = None
+
+class FormDataResponse(FormData):
+    id: str = Field(..., alias='_id')
+
+    class Config:
+        populate_by_name = True
