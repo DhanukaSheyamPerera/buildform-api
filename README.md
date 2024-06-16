@@ -31,7 +31,7 @@ This API is designed to manage form data submissions, retrievals, updates, and d
 - Response: Message indicating successful deletion
 
 ### Update Form Data by ID
-- **PUT** `/update-forms/{id}`
+- **PUT** `/forms/{id}`
 - Description: Update an existing form data entry by its unique identifier.
 - Path Parameter: `id` (string)
 - Request Body: `FormData`
